@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+ 
+<script>
+
+
+</script>
+<style>
+    caption{  font-size : 32px;    }
+    table{width:320px;}
+    table,th{background: #333;}
+    th{
+        padding-right: 10px;
+        height:80px;
+
+    }
+    td{
+        height: 75px;
+        text-align: center;
+    }
+    th > input {
+        width:100%;
+        border:none;
+        background: #333; color: white;
+        text-align: right;font-size: 36px;
+    }
+    td > input[type='button']{
+        width:100%;
+        height:inherit;
+        color: #333;
+        font-size: 36px;
+        border:none;
+
+    }
+
+    td>input[type="button"]:hover{
+        background: #999
+    }
+    td:last-child > input {
+        background:orange; color:white;
+    }
+    #navbar ul li{
+        list-style: none;  /*<li> 태그는 위의 이미지처럼 목록을 나타내는 점을 없앤다*/
+        /*color: rgb(17, 14, 14); /* 글씨 색을 흰색으로 설정 */
+        /*background-color: #f1dddd; /* 배경색을 진한 회색(RGB(2D,2D,2D)으로 설정*/
+        float: left; /* <li>태그들이 왼쪽에 흐르게 설정(그러면 아래있는 내용은 오른쪽으로 옴)*/
+        line-height: 30px; /* 글씨가 가운데로 오도록 설정하기 위해 한줄의 높이를 30px로 설정*/
+        vertical-align: middle; /* 세로 정렬을 가운데로 설정(위의 line-height와 같이 설정 필요함)*/
+        text-align: center; /* 글씨 정렬을 가운데로 설정*/
+        padding-left: 5px;
+    }
+
+    #navbar .menuLink { 
+        /* topMenu 아이디를 가진 태그 안에 있는 menuLink 클래스 태그들의 스타일 설정 */
+        text-decoration:none; /* 링크(<a> 태그)가 가지는 기본 꾸밈 효과(밑줄 등)을 없앰 */
+        color: white; /* 폰트색을 흰색으로 설정 */
+        display: block; /* 링크를 글씨가 있는 부분 뿐만아니라 전체 영역을 클릭해도 링크가 걸리게 설정*/ 
+        width: 150px; /* 메뉴링크의 넓이 설정 */
+        font-size: 12px; /* 폰트 사이즈 12px로 설정 */
+        font-weight: bold; /* 폰트를 굵게 */
+        font-family: "Trebuchet MS", Dotum, Arial;/* 기본 폰트 적용, 시스템 폰트를 종류별로 순서대로 */
+        }
+
+
+</style>
+</head>
+<body>
+    <h1>자바스트립트 프로젝트북 </h1>
+    <div id="navbar">
+            <ul class="nav">
+                 <li class="menuLink"><a href="#">project 1.계산기</a></li>
+                 <li class="menuLink"><a href="#">menu2</a></li>
+                 <li class="menuLink"><a href="#">menu3</a></li>
+            </ul>
+    </div>
+    <br><br>
+    <form name="cal">
+        <table>
+        <caption>계산기</caption>
+        <tr>
+            <th colspan="4"><input type="text" name="result" value="0"></th>
+        </tr>
+        <tr>
+            <td><input type="button" value="7"></td>
+            <td><input type="button" value="8"></td>
+            <td><input type="button" value="9"></td>
+            <td><input type="button" value="+"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="4"></td>
+            <td><input type="button" value="5"></td>
+            <td><input type="button" value="6"></td>
+            <td><input type="button" value="-"></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="1"></td>
+            <td><input type="button" value="2"></td>
+            <td><input type="button" value="3"></td>
+            <td><input type="button" value="*"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="0"></td>
+            <td><input type="button" value="%"></td>
+            <td><input type="button" value="/"></td>
+            
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" value="clear" class="cls_btn"></td>
+            <td colspan="2"><input type="button" value="=" class="result_btn"></td>
+            
+        </tr>
+    </table>
+    </form>
+    <script>
+            
+            var inp=document.forms['cal'];
+            var input=inp.getElementsByTagName('input')
+            var cls_btn= document.getElementsByClassName("cls_btn")[0];
+            var result_btn=document.getElementsByClassName("result_btn")[0];
+            
+            for(var i=0; i< input.length;i++){
+                if(input[i].value != '=' && input[i].value !='clear'){
+                    input[i].onclick=function(){
+                        calc(this.value);
+                    }
+                }
+            }
+            cls_btn.onclick=function(){ 
+                clear();
+            }
+            result_btn.onclick=function(){
+                try {
+                    
+                    my_result();
+
+                } catch (error) {
+                    
+                    var result = inp['result'];
+                    result.value = '입력오류'
+                }
+                
+                
+            }
+
+            //리설트 클릭 시 결과값 출력    
+            function my_result(){
+                var result = document.forms['cal']['result'];
+                var calc= eval(result.value);
+                inp['result'].value=calc;
+            }
+
+            //숫자입력 시 초기 값인 0 삭제 
+            function calc(value){
+                if(inp['result'].value==0){
+                    inp['result'].value='';
+                }
+            
+                inp['result'].value +=value;
+            
+            }
+
+            function clear(){
+                inp['result'].value=0;
+
+            }
+            
+            </script>
+</body>
+</html>
